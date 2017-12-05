@@ -161,10 +161,27 @@ function validate(card){
 	return true;
 }
 
+function handleMatch(){
+	console.log('Cards are matching');
+	openCards.forEach(function(element){
+
+		matchedCards.push(element);
+		keepOpenOfMatch($('.card:has(.' + element + ')'));
+
+		// if game is over, don't do anything
+		if (matchedCards.length === 16){
+			console.log('Game is over');
+			return false;
+		}
+
+	});
+	openCards.length = 0;
+}
+
 function checkMatchModified(){
 	match = (openCards[0] === openCards[1])
 	if (match){
-		console.log('Cards are matching');
+		handleMatch();
 	}
 	else{
 		console.log('Cards are NOT matching');
