@@ -12,8 +12,9 @@ const cardSymbol = ['fa-bicycle', 'fa-bicycle',
  				]
 // Create a empty array to store the open card.
 // Initialize the match cards and the number of moves. 
-openCards = [];
-matchedCards = [];
+let openCards = [];
+let matchedCards = [];
+let counter = 0;
 
 /*
  * Display the cards on the page
@@ -83,6 +84,10 @@ function addToOpen(card){
 	openCards.push(cardPic);
 };
 
+function increaseCounter(){
+	counter += 1;
+	$('.moves').text(counter);
+};
 // The message will be shown when player win the game. 
 function showWinMessage(){
 
@@ -114,6 +119,7 @@ $(document).ready(function(){
 		if(openCards.length <= 1){
 			showSymbol(card);
 			addToOpen(card);
+			increaseCounter();
 		} else if(openCards.length === 2){
 			checkMatch();
 		}
