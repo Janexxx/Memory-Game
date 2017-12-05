@@ -98,12 +98,17 @@ function increaseCounter(){
 		$('#second-star').css('color','#fefefe');
 		numStar = 1;
 	} else if(counter > 15){
+		numStar = 0;
 		showLoseMessage();
 	}
 };
 // The message will be shown when player win the game. 
 function showWinMessage(){
+	$('.winningText').text('You have won the game with '+numStar+' star. Congratulations!');
+};
 
+function showLoseMessage(){
+	$('.losingText').text('You lose the game with '+numStar+' star.');
 };
 
 // To check if the card is already opened. 
