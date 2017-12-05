@@ -39,6 +39,12 @@ function shuffle(array) {
     return array;
 }
 
+function bindResetClickEvent(){
+	$('.restart').on('click', function(){
+		initGame();
+	});
+}
+
 function bindCardClickEvent(){
 	$('.card').on('click', function(event){
 		let card = $(event.target);
@@ -236,6 +242,7 @@ function cardClicked(card){
 
 $(document).ready(function(){
 	bindCardClickEvent();
+	bindResetClickEvent();
 });
 
 
