@@ -39,6 +39,13 @@ function shuffle(array) {
     return array;
 }
 
+function bindCardClickEvent(){
+	$('.card').on('click', function(event){
+		let card = $(event.target);
+		cardClicked(card);
+	});
+}
+
 // Ramdomizes cards and updates card on HTML.
 function initGame(){
 	let card = $('.card');
@@ -228,10 +235,7 @@ function cardClicked(card){
 }
 
 $(document).ready(function(){
-	$('.card').on('click', function(event){
-		let card = $(event.target);
-		cardClicked(card);
-	});
+	bindCardClickEvent();
 });
 
 
