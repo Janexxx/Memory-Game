@@ -129,11 +129,13 @@ function increaseCounter(){
 		showLoseMessage();
 	}
 };
+
 // The message will be shown when player win the game. 
 function showWinMessage(){
 	$('.winningText').text('You have won the game with '+numStar+' star. Congratulations!');
 };
 
+// The message will be shown when player loses the game.
 function showLoseMessage(){
 	$('.losingText').text('You lose the game with '+numStar+' star.');
 };
@@ -240,18 +242,6 @@ function cardClicked(card){
 
 	console.log('2nd card clicked. Must do matching');
 	setTimeout(checkMatchModified, 500);
-	return;
-
-	if(isValid(card)){
-		if(openCards.length <= 1){
-			showSymbol(card);
-			addToOpen(card);
-		} else if(openCards.length == 2){
-			increaseCounter();
-			checkMatch();
-			// setInterval(checkMatch, 1000);
-		}
-	}
 }
 
 $(document).ready(function(){
