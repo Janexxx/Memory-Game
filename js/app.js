@@ -52,16 +52,33 @@ function bindCardClickEvent(){
 	});
 }
 
-// Ramdomizes cards and updates card on HTML.
-function initGame(){
-	let card = $('.card');
-	card.removeClass('match open show');
+function initVariables(){
+	openCards.length = 0;
+	matchedCards.length = 0;
+	counter = 0;
+	numStar = 0;
+}
 
+function clearText(){
+	$('.deck').empty();
+	$('.moves').text('0');
+	$('.winningText').text('');
+	$('.losingText').text('');
+}
+
+function randomizeCards(){
 	let newCardSymbol = shuffle(cardSymbol);
 	for(let i = 0; i < cardSymbol.length; i++){
 		$('.deck').append('<li class="card"><i class="fa ' + cardSymbol[i] + '"></i></li>');
 	}
+}
 
+// Ramdomizes cards and updates card on HTML.
+function initGame(){
+	initVariables();
+	clearText();
+	randomizeCards();
+	bindCardClickEvent();
 	$('.fa-star').css('color', '#F4A460');
 };
 
