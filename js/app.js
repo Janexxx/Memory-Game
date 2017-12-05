@@ -143,6 +143,14 @@ function isGameOver(){
 	return false;
 }
 
+function isAlreadyOpen(card){
+	if (card.hasClass('match')) return true;
+	if (card.hasClass('open')) return true;
+	if (card.hasClass('show')) return true;
+
+	return false;
+}
+
 // under some circumstances, we do not want the card click to do anything
 // handle those circumstances here
 function validate(card){
@@ -151,18 +159,10 @@ function validate(card){
 	if(isGameOver()) return false;
 
 	// if card is already open, don't do anything
-	if (card.hasClass('match') ||
-		card.hasClass('open') ||
-		card.hasClass('show')){
-		console.log('Card is already open or matched');
-		return false;
-	}
+	if (isAlreadyOpen(card)) return false;
 
 	// if there are already 2 or more cards open, don't do anything
-	if (openCards.length > 1){
-		console.log('There are 2 or more cards open already.');
-		return false;
-	}
+	if (openCards.length > 1) return false;
 
 	return true;
 }
