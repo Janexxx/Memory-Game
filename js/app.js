@@ -17,13 +17,6 @@ let matchedCards = [];
 let counter = 0;
 let numStar = 3; 
 
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
-
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
 	var currentIndex = array.length, temporaryValue, randomIndex;
@@ -39,12 +32,14 @@ function shuffle(array) {
 	return array;
 }
 
+// bind reset button's click event
 function bindResetClickEvent(){
 	$('.restart').on('click', function(){
 		initGame();
 	});
 }
 
+// bind card's click event
 function bindCardClickEvent(){
 	$('.card').on('click', function(event){
 		let card = $(event.target);
@@ -52,6 +47,7 @@ function bindCardClickEvent(){
 	});
 }
 
+// ensure that variables are initialized
 function initVariables(){
 	openCards.length = 0;
 	matchedCards.length = 0;
@@ -59,6 +55,7 @@ function initVariables(){
 	numStar = 0;
 }
 
+// clear verbiage on the text
 function clearText(){
 	$('.deck').empty();
 	$('.moves').text('0');
@@ -66,6 +63,7 @@ function clearText(){
 	$('.losingText').text('');
 }
 
+// shuffle the list of cards
 function randomizeCards(){
 	let newCardSymbol = shuffle(cardSymbol);
 	for(let i = 0; i < cardSymbol.length; i++){
