@@ -134,22 +134,23 @@ function checkMatch(){
 	}
 };
 
+function cardClicked(card){
+	if(isValid(card)){
+		if(openCards.length <= 1){
+			showSymbol(card);
+			addToOpen(card);
+		} else if(openCards.length == 2){
+			increaseCounter();
+			checkMatch();
+			// setInterval(checkMatch, 1000);
+		}
+	}
+}
 
 $(document).ready(function(){
 	$('.card').on('click', function(event){
 		let card = $(event.target);
-
-		if(isValid(card)){
-			if(openCards.length <= 1){
-				showSymbol(card);
-				addToOpen(card);
-			} else if(openCards.length == 2){
-				increaseCounter();
-				checkMatch();
-				// setInterval(checkMatch, 1000);
-			}
-		}
-
+		cardClicked(card);
 	});
 });
 
