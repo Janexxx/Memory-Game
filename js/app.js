@@ -48,6 +48,8 @@ function initGame(){
 	for(let i = 0; i < cardSymbol.length; i++){
 		$('.deck').append('<li class="card"><i class="fa ' + cardSymbol[i] + '"></i></li>');
 	}
+
+	$('.fa-star').css('color', '#F4A460');
 };
 
 
@@ -88,12 +90,23 @@ function addToOpen(card){
 function increaseCounter(){
 	counter += 1;
 	$('.moves').text(counter);
+	// Decrease the star according to the number of moves that player made.
+	if(counter === 5){
+		$('#third-star').css('color','#fefefe');
+		numStar = 2;
+	} else if(counter === 10){
+		$('#second-star').css('color','#fefefe');
+		numStar = 1;
+	} else if(counter > 15){
+		showLoseMessage();
+	}
 };
 // The message will be shown when player win the game. 
 function showWinMessage(){
 
 };
 
+// To check if the card is already opened. 
 function isValid(card){
 	return !(card.hasClass('open') || card.hasClass('match'));
 };
@@ -127,7 +140,8 @@ $(document).ready(function(){
 				addToOpen(card);
 			} else if(openCards.length == 2){
 				increaseCounter();
-				setInterval(checkMatch, 1000);
+				checkMatch();
+				// setInterval(checkMatch, 1000);
 			}
 		}
 
