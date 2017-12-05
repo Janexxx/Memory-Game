@@ -193,6 +193,8 @@ function checkMatchModified(){
 	else{
 		handleNoMatch();
 	}
+
+	increaseCounter();
 }
 
 function cardClicked(card){
