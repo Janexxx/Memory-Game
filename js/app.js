@@ -145,24 +145,6 @@ function isValid(card){
 	return !(card.hasClass('open') || card.hasClass('match'));
 };
 
-// To check if the two cards in openCards array are same or not. 
-function checkMatch(){
-	if(openCards.length == 2){ // Check if match when two cards are stored in the openCards array.
-		if (openCards[0] == openCards[1]){ // If they are matched
-			keepOpenOfMatch($('.card:has(.'+openCards[0]+')')); 
-			matchedCards.push(openCards[0]);
-			if(matchedCards.lengh == 8){ // The game is won and finish.
-				showWinMessage();
-			}
-		}
-		else{ // The two cards are not matched. So hide the two cards. 
-			hideSymbol($('.card:has(.'+openCards[0]+')'));
-			hideSymbol($('.card:has(.'+openCards[1]+')'));
-		}
-		openCards = [];
-	}
-};
-
 // check if a game is over
 function isGameOver(){
 	if (matchedCards.length === 16){
@@ -219,7 +201,7 @@ function handleNoMatch(){
 }
 
 // handle conditions when there's match or not a match
-function checkMatchModified(){
+function checkMatch(){
 	match = (openCards[0] === openCards[1])
 	if (match){
 		handleMatch();
@@ -250,7 +232,7 @@ function cardClicked(card){
 	}
 
 	console.log('2nd card clicked. Must do matching');
-	setTimeout(checkMatchModified, 500);
+	setTimeout(checkMatch, 500);
 }
 
 $(document).ready(function(){
