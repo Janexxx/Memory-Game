@@ -163,6 +163,7 @@ function checkMatch(){
 	}
 };
 
+// check if a game is over
 function isGameOver(){
 	if (matchedCards.length === 16){
 		console.log('Game is over');
@@ -172,6 +173,7 @@ function isGameOver(){
 	return false;
 }
 
+// check if the card is already opened, showed or already matched
 function isAlreadyOpen(card){
 	if (card.hasClass('match')) return true;
 	if (card.hasClass('open')) return true;
@@ -196,6 +198,7 @@ function validate(card){
 	return true;
 }
 
+// keep cards open and remember the cards when there's a match
 function handleMatch(){
 	console.log('Cards are matching');
 	openCards.forEach(function(element){
@@ -206,6 +209,7 @@ function handleMatch(){
 	openCards.length = 0;
 }
 
+// hide the cards when there's not a match
 function handleNoMatch(){
 	console.log('Cards are NOT matching');
 	openCards.forEach(function(element){
@@ -214,6 +218,7 @@ function handleNoMatch(){
 	openCards.length = 0;
 }
 
+// handle conditions when there's match or not a match
 function checkMatchModified(){
 	match = (openCards[0] === openCards[1])
 	if (match){
@@ -226,6 +231,10 @@ function checkMatchModified(){
 	increaseCounter();
 }
 
+// handle functionality when card is clicked
+// validate to see if any action needs to be taken
+// remember the card that was clicked
+// perform match if this is the 2nd card that was clicked
 function cardClicked(card){
 
 	if (!validate(card)) return;
