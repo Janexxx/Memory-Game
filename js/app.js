@@ -15,6 +15,7 @@ const cardSymbol = ['fa-bicycle', 'fa-bicycle',
 let openCards = [];
 let matchedCards = [];
 let counter = 0;
+let numStar = 3; 
 
 /*
  * Display the cards on the page
@@ -93,9 +94,13 @@ function showWinMessage(){
 
 };
 
+function isValid(card){
+	return !(card.hasClass('open') || card.hasClass('match'));
+};
+
 // To check if the two cards in openCards array are same or not. 
 function checkMatch(){
-	if(openCards.length === 2){ // Check if match when two cards are stored in the openCards array.
+	if(openCards.length == 2){ // Check if match when two cards are stored in the openCards array.
 		if (openCards[0] == openCards[1]){ // If they are matched
 			keepOpenOfMatch($('.card:has(.'+openCards[0]+')')); //???
 			matchedCards.push(openCards[0]);
@@ -116,16 +121,20 @@ $(document).ready(function(){
 	$('.card').on('click', function(event){
 		let card = $(event.target);
 
-		if(openCards.length == 0){
-			showSymbol(card);
-			addToOpen(card);
-		} else if(openCards.length == 1){
-			showSymbol(card);
-			addToOpen(card);
-		} else if(openCards.length == 2){
-			increaseCounter();
-			checkMatch();
+		if(isValid(card)){
+			if(openCards.length == 0){
+				showSymbol(card);
+				addToOpen(card);
+			} else if(openCards.length == 1){
+				showSymbol(card);
+				addToOpen(card);
+			} else if(openCards.length == 2){
+				increaseCounter();
+				checkMatch();
+			// setTimeOut(checkMatch, 800);
+			}
 		}
+
 	});
 });
 
