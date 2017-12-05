@@ -161,6 +161,16 @@ function validate(card){
 	return true;
 }
 
+function checkMatchModified(){
+	match = (openCards[0] === openCards[1])
+	if (match){
+		console.log('Cards are matching');
+	}
+	else{
+		console.log('Cards are NOT matching');
+	}
+}
+
 function cardClicked(card){
 
 	if (!validate(card)) return;
@@ -176,6 +186,7 @@ function cardClicked(card){
 	}
 
 	console.log('2nd card clicked. Must do matching');
+	setTimeout(checkMatchModified, 500);
 	return;
 
 	if(isValid(card)){
