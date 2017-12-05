@@ -102,7 +102,7 @@ function isValid(card){
 function checkMatch(){
 	if(openCards.length == 2){ // Check if match when two cards are stored in the openCards array.
 		if (openCards[0] == openCards[1]){ // If they are matched
-			keepOpenOfMatch($('.card:has(.'+openCards[0]+')')); //???
+			keepOpenOfMatch($('.card:has(.'+openCards[0]+')')); 
 			matchedCards.push(openCards[0]);
 			if(matchedCards.lengh == 8){ // The game is won and finish.
 				showWinMessage();
@@ -122,16 +122,12 @@ $(document).ready(function(){
 		let card = $(event.target);
 
 		if(isValid(card)){
-			if(openCards.length == 0){
-				showSymbol(card);
-				addToOpen(card);
-			} else if(openCards.length == 1){
+			if(openCards.length <= 1){
 				showSymbol(card);
 				addToOpen(card);
 			} else if(openCards.length == 2){
 				increaseCounter();
-				checkMatch();
-			// setTimeOut(checkMatch, 800);
+				setInterval(checkMatch, 1000);
 			}
 		}
 
