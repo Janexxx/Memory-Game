@@ -134,15 +134,21 @@ function checkMatch(){
 	}
 };
 
+function isGameOver(){
+	if (matchedCards.length === 16){
+		console.log('Game is over');
+		return true;
+	}
+
+	return false;
+}
+
 // under some circumstances, we do not want the card click to do anything
 // handle those circumstances here
 function validate(card){
 
 	// if game is over, don't do anything
-	if (matchedCards.length === 16){
-		console.log('Game is over');
-		return false;
-	}
+	if(isGameOver()) return false;
 
 	// if card is already open, don't do anything
 	if (card.hasClass('match') ||
@@ -164,16 +170,17 @@ function validate(card){
 function handleMatch(){
 	console.log('Cards are matching');
 	openCards.forEach(function(element){
-
 		matchedCards.push(element);
 		keepOpenOfMatch($('.card:has(.' + element + ')'));
+		isGameOver();
+	});
+	openCards.length = 0;
+}
 
-		// if game is over, don't do anything
-		if (matchedCards.length === 16){
-			console.log('Game is over');
-			return false;
-		}
-
+function handleNoMatch(){
+	console.log('Cards are NOT matching');
+	openCards.forEach(function(element){
+		hideSymbol($('.card:has(.' + element + ')'));
 	});
 	openCards.length = 0;
 }
@@ -184,7 +191,7 @@ function checkMatchModified(){
 		handleMatch();
 	}
 	else{
-		console.log('Cards are NOT matching');
+		handleNoMatch();
 	}
 }
 
