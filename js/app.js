@@ -134,7 +134,37 @@ function checkMatch(){
 	}
 };
 
+// under some circumstances, we do not want the card click to do anything
+// handle those circumstances here
+function validate(card){
+
+	// if game is over, don't do anything
+	if (matchedCards.length === 16){
+		console.log('Game is over');
+		return false;
+	}
+
+	// if card is already open, don't do anything
+	if (card.hasClass('match') ||
+		card.hasClass('open') ||
+		card.hasClass('show')){
+		console.log('Card is already open or matched');
+		return false;
+	}
+
+	// if there are already 2 or more cards open, don't do anything
+	if (openCards.length > 1){
+		console.log('There are 2 or more cards open already. Odd case has been detected');
+		return false;
+	}
+
+	return true;
+}
+
 function cardClicked(card){
+
+	if (!validate(card)) return;
+
 	if(isValid(card)){
 		if(openCards.length <= 1){
 			showSymbol(card);
