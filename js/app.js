@@ -116,11 +116,14 @@ $(document).ready(function(){
 	$('.card').on('click', function(event){
 		let card = $(event.target);
 
-		if(openCards.length <= 1){
+		if(openCards.length == 0){
 			showSymbol(card);
 			addToOpen(card);
+		} else if(openCards.length == 1){
+			showSymbol(card);
+			addToOpen(card);
+		} else if(openCards.length == 2){
 			increaseCounter();
-		} else if(openCards.length === 2){
 			checkMatch();
 		}
 	});
