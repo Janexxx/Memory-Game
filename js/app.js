@@ -154,7 +154,7 @@ function validate(card){
 
 	// if there are already 2 or more cards open, don't do anything
 	if (openCards.length > 1){
-		console.log('There are 2 or more cards open already. Odd case has been detected');
+		console.log('There are 2 or more cards open already.');
 		return false;
 	}
 
@@ -164,6 +164,19 @@ function validate(card){
 function cardClicked(card){
 
 	if (!validate(card)) return;
+
+	// open the card and remember the opened card
+	showSymbol(card);
+	addToOpen(card);
+
+	// if this is the first card that's opened, do nothing
+	if (openCards.length === 1) {
+		console.log('Waiting for the 2nd card to be clicked');
+		return;
+	}
+
+	console.log('2nd card clicked. Must do matching');
+	return;
 
 	if(isValid(card)){
 		if(openCards.length <= 1){
