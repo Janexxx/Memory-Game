@@ -213,19 +213,11 @@ function checkMatch(){
 // perform match if this is the 2nd card that was clicked
 function cardClicked(card){
 
-	// if (!validate(card)) return;
+	if(!validate(card)) return; // Stop executing other statements if validation fails.
 
-	// // open the card and remember the opened card
-	// showSymbol(card);
-	// addToOpen(card);
-
-
-	if (!validate(card)){
-		return;
-	} else{
-		showSymbol(card);
-		addToOpen(card);
-	}
+	// open the card and remember the opened card.
+	showSymbol(card);
+	addToOpen(card);
 
 	// if this is the first card that's opened, do nothing
 	if (openCards.length === 1) {
@@ -242,7 +234,7 @@ $(document).ready(function(){
 	bindResetClickEvent();
 	$('.close').click(function() {
     $('.modal').css('display', 'none');
-});
+	});
 });
 
 
