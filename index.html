@@ -31,15 +31,22 @@
 
         <ul class="deck"></ul> <!--Remove all the <li> tags and then dynamically generate and appen them back in this <ul> tag. -->
     </div>
+
     <!-- The modal for winning the game. -->
-    <div id="winning-modal" class="modal">
+    <div id="winningModal" class="modal">
     	<div class="modal-content">
-    		<p class="winningText"></p>
+    		<p class="winning-text"></p>
+    		<button type="button" class="close">Close</button>
+    		<img class="pic" src='img/winner.jpg' alt="winner Simpson">
     	</div>
     </div>
-    <div id="losing-modal" class="modal">
+
+    <!-- The modal for losing the game. -->
+    <div id="losingModal" class="modal">
     	<div class="modal-content">
-    		<p class="losingText"></p>
+    		<p class="losing-text"></p>
+    		<button type="button" class="close">Close</button>
+    		<img class="pic" src='img/loser.png' alt="loser Simpson">
     	</div>
     </div>
 

@@ -25,7 +25,6 @@ const cardSymbol = ['fa-bicycle', 'fa-bicycle',
 // Initialize the match cards and the number of moves. 
 let openCards = [];
 let matchedCards = [];
-let counter = 0;
 let numStar = 3; 
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -43,14 +42,14 @@ function shuffle(array) {
 	return array;
 }
 
-// bind reset button's click event
+// Bind reset button's click event
 function bindResetClickEvent(){
 	$('.restart').on('click', function(){
 		initGame();
 	});
 }
 
-// bind card's click event
+// Bind card's click event
 function bindCardClickEvent(){
 	$('.card').on('click', function(event){
 		let card = $(event.target);
@@ -58,15 +57,14 @@ function bindCardClickEvent(){
 	});
 }
 
-// ensure that variables are initialized
+// Ensure that variables are initialized
 function initVariables(){
 	openCards.length = 0;
 	matchedCards.length = 0;
 	counter = 0;
-	numStar = 0;
 }
 
-// clear verbiage on the text
+// Clear verbiage on the text
 function clearText(){
 	$('.deck').empty();
 	$('.moves').text('0');
@@ -89,73 +87,69 @@ function initGame(){
 	randomizeCards();
 	bindCardClickEvent();
 	$('.fa-star').css('color', '#F4A460');
-};
+}
 
  // Open and show the selected card.
 function showSymbol(card){
 	card.addClass('open show');
-};
+}
 
 // Hide the selected card.
 function hideSymbol(card){
 	card.removeClass('open show');
-};
+}
 
 // Keep the matched cards.
 function keepOpenOfMatch(card){
 	card.addClass('match');
 	card.removeClass('open show');
-};
+}
 
 //.attr()get the value of 'class' attribute. But why split? --> in order to easily compare
 // Add the open card to openCards array. 
 function addToOpen(card){
 	const cardPic = card.children('i').attr('class').split(' ')[1];
 	openCards.push(cardPic);
-};
+}
 
 function increaseCounter(){
 	counter += 1;
 	$('.moves').text(counter);
 	// Decrease the star according to the number of moves that player made.
-	if(counter === 5){
+	if(counter === 15){
 		$('#third-star').css('color','#fefefe');
 		numStar = 2;
-	} else if(counter === 10){
+	} else if(counter === 20){
 		$('#second-star').css('color','#fefefe');
 		numStar = 1;
-	} else if(counter > 15){
+	} else if(counter > 25){
 		numStar = 0;
 		showLoseMessage();
 	}
-};
+}
 
 // The message will be shown when player win the game. 
 function showWinMessage(){
-	$('.winningText').text('You have won the game with '+numStar+' star. Congratulations!');
-};
+	$('.winning-text').text('You have won the game with '+numStar+' star. Congratulations!');
+	$('#winningModal').css('display', 'block');
+}
 
 // The message will be shown when player loses the game.
 function showLoseMessage(){
-	$('.losingText').text('You lose the game with '+numStar+' star.');
-};
+	$('.losing-text').text('You lose the game with '+numStar+' star.');
+	$('#losingModal').css('display', 'block');
+}
 
-// To check if the card is already opened. 
-function isValid(card){
-	return !(card.hasClass('open') || card.hasClass('match'));
-};
-
-// check if a game is over
+// Check if a game is over.
 function isGameOver(){
 	if (matchedCards.length === 16){
-		console.log('Game is over');
-		return true;
+		showWinMessage();
 	}
 
 	return false;
 }
 
-// check if the card is already opened, showed or already matched
+// Check if the card is already opened, showed or already matched.
 function isAlreadyOpen(card){
 	if (card.hasClass('match')) return true;
 	if (card.hasClass('open')) return true;
@@ -164,25 +158,25 @@ function isAlreadyOpen(card){
 	return false;
 }
 
-// under some circumstances, we do not want the card click to do anything
-// handle those circumstances here
+// Under some circumstances, we do not want the card click to do anything.
+// Handle those circumstances here.
 function validate(card){
 
-	// if game is over, don't do anything
+	// If game is over, don't do anything.
 	if(isGameOver()) return false;
 
-	// if card is already open, don't do anything
+	// If card is already open, don't do anything.
 	if (isAlreadyOpen(card)) return false;
 
-	// if there are already 2 or more cards open, don't do anything
+	// If there are already 2 or more cards open, don't do anything.
 	if (openCards.length > 1) return false;
 
 	return true;
 }
 
-// keep cards open and remember the cards when there's a match
+// Keep cards open and remember the cards when there's a match.
 function handleMatch(){
-	console.log('Cards are matching');
+	//console.log('Cards are matching');
 	openCards.forEach(function(element){
 		matchedCards.push(element);
 		keepOpenOfMatch($('.card:has(.' + element + ')'));
@@ -191,16 +185,16 @@ function handleMatch(){
 	openCards.length = 0;
 }
 
-// hide the cards when there's not a match
+// Hide the cards when there's not a match.
 function handleNoMatch(){
-	console.log('Cards are NOT matching');
+	//console.log('Cards are NOT matching');
 	openCards.forEach(function(element){
 		hideSymbol($('.card:has(.' + element + ')'));
 	});
 	openCards.length = 0;
 }
 
-// handle conditions when there's match or not a match
+// Handle conditions when there's match or not a match
 function checkMatch(){
 	match = (openCards[0] === openCards[1])
 	if (match){
@@ -219,25 +213,36 @@ function checkMatch(){
 // perform match if this is the 2nd card that was clicked
 function cardClicked(card){
 
-	if (!validate(card)) return;
+	// if (!validate(card)) return;
 
-	// open the card and remember the opened card
-	showSymbol(card);
-	addToOpen(card);
+	// // open the card and remember the opened card
+	// showSymbol(card);
+	// addToOpen(card);
+
+
+	if (!validate(card)){
+		return;
+	} else{
+		showSymbol(card);
+		addToOpen(card);
+	}
 
 	// if this is the first card that's opened, do nothing
 	if (openCards.length === 1) {
-		console.log('Waiting for the 2nd card to be clicked');
+		//console.log('Waiting for the 2nd card to be clicked');
 		return;
 	}
 
-	console.log('2nd card clicked. Must do matching');
+	//console.log('2nd card clicked. Must do matching');
 	setTimeout(checkMatch, 500);
 }
 
 $(document).ready(function(){
 	bindCardClickEvent();
 	bindResetClickEvent();
+	$('.close').click(function() {
+    $('.modal').css('display', 'none');
+});
 });
 
 
