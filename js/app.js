@@ -1,4 +1,15 @@
 /*
+ * set up the event listener for a card. If a card is clicked:
+ *  - display the card's symbol (put this functionality in another function that you call from this one)
+ *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
+ *  - if the list already has another card, check to see if the two cards match
+ *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
+ *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
+ *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
+ *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
+ */
+
+/*
  * Create a list that holds all of your cards
  */
 const cardSymbol = ['fa-bicycle', 'fa-bicycle', 
@@ -17,52 +28,68 @@ let matchedCards = [];
 let counter = 0;
 let numStar = 3; 
 
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
-
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+	var currentIndex = array.length, temporaryValue, randomIndex;
 
-    while (currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-    }
+	while (currentIndex !== 0) {
+		randomIndex = Math.floor(Math.random() * currentIndex);
+		currentIndex -= 1;
+		temporaryValue = array[currentIndex];
+		array[currentIndex] = array[randomIndex];
+		array[randomIndex] = temporaryValue;
+	}
 
-    return array;
+	return array;
 }
 
-// Ramdomizes cards and updates card on HTML.
-function initGame(){
-	let card = $('.card');
-	card.removeClass('match open show');
+// bind reset button's click event
+function bindResetClickEvent(){
+	$('.restart').on('click', function(){
+		initGame();
+	});
+}
 
+// bind card's click event
+function bindCardClickEvent(){
+	$('.card').on('click', function(event){
+		let card = $(event.target);
+		cardClicked(card);
+	});
+}
+
+// ensure that variables are initialized
+function initVariables(){
+	openCards.length = 0;
+	matchedCards.length = 0;
+	counter = 0;
+	numStar = 0;
+}
+
+// clear verbiage on the text
+function clearText(){
+	$('.deck').empty();
+	$('.moves').text('0');
+	$('.winningText').text('');
+	$('.losingText').text('');
+}
+
+// shuffle the list of cards
+function randomizeCards(){
 	let newCardSymbol = shuffle(cardSymbol);
 	for(let i = 0; i < cardSymbol.length; i++){
 		$('.deck').append('<li class="card"><i class="fa ' + cardSymbol[i] + '"></i></li>');
 	}
+}
 
+// Ramdomizes cards and updates card on HTML.
+function initGame(){
+	initVariables();
+	clearText();
+	randomizeCards();
+	bindCardClickEvent();
 	$('.fa-star').css('color', '#F4A460');
 };
-
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
 
  // Open and show the selected card.
 function showSymbol(card){
@@ -102,11 +129,13 @@ function increaseCounter(){
 		showLoseMessage();
 	}
 };
+
 // The message will be shown when player win the game. 
 function showWinMessage(){
 	$('.winningText').text('You have won the game with '+numStar+' star. Congratulations!');
 };
 
+// The message will be shown when player loses the game.
 function showLoseMessage(){
 	$('.losingText').text('You lose the game with '+numStar+' star.');
 };
@@ -116,41 +145,99 @@ function isValid(card){
 	return !(card.hasClass('open') || card.hasClass('match'));
 };
 
-// To check if the two cards in openCards array are same or not. 
-function checkMatch(){
-	if(openCards.length == 2){ // Check if match when two cards are stored in the openCards array.
-		if (openCards[0] == openCards[1]){ // If they are matched
-			keepOpenOfMatch($('.card:has(.'+openCards[0]+')')); 
-			matchedCards.push(openCards[0]);
-			if(matchedCards.lengh == 8){ // The game is won and finish.
-				showWinMessage();
-			}
-		}
-		else{ // The two cards are not matched. So hide the two cards. 
-			hideSymbol($('.card:has(.'+openCards[0]+')'));
-			hideSymbol($('.card:has(.'+openCards[1]+')'));
-		}
-		openCards = [];
+// check if a game is over
+function isGameOver(){
+	if (matchedCards.length === 16){
+		console.log('Game is over');
+		return true;
 	}
-};
 
+	return false;
+}
+
+// check if the card is already opened, showed or already matched
+function isAlreadyOpen(card){
+	if (card.hasClass('match')) return true;
+	if (card.hasClass('open')) return true;
+	if (card.hasClass('show')) return true;
+
+	return false;
+}
+
+// under some circumstances, we do not want the card click to do anything
+// handle those circumstances here
+function validate(card){
+
+	// if game is over, don't do anything
+	if(isGameOver()) return false;
+
+	// if card is already open, don't do anything
+	if (isAlreadyOpen(card)) return false;
+
+	// if there are already 2 or more cards open, don't do anything
+	if (openCards.length > 1) return false;
+
+	return true;
+}
+
+// keep cards open and remember the cards when there's a match
+function handleMatch(){
+	console.log('Cards are matching');
+	openCards.forEach(function(element){
+		matchedCards.push(element);
+		keepOpenOfMatch($('.card:has(.' + element + ')'));
+		isGameOver();
+	});
+	openCards.length = 0;
+}
+
+// hide the cards when there's not a match
+function handleNoMatch(){
+	console.log('Cards are NOT matching');
+	openCards.forEach(function(element){
+		hideSymbol($('.card:has(.' + element + ')'));
+	});
+	openCards.length = 0;
+}
+
+// handle conditions when there's match or not a match
+function checkMatch(){
+	match = (openCards[0] === openCards[1])
+	if (match){
+		handleMatch();
+	}
+	else{
+		handleNoMatch();
+	}
+
+	increaseCounter();
+}
+
+// handle functionality when card is clicked
+// validate to see if any action needs to be taken
+// remember the card that was clicked
+// perform match if this is the 2nd card that was clicked
+function cardClicked(card){
+
+	if (!validate(card)) return;
+
+	// open the card and remember the opened card
+	showSymbol(card);
+	addToOpen(card);
+
+	// if this is the first card that's opened, do nothing
+	if (openCards.length === 1) {
+		console.log('Waiting for the 2nd card to be clicked');
+		return;
+	}
+
+	console.log('2nd card clicked. Must do matching');
+	setTimeout(checkMatch, 500);
+}
 
 $(document).ready(function(){
-	$('.card').on('click', function(event){
-		let card = $(event.target);
-
-		if(isValid(card)){
-			if(openCards.length <= 1){
-				showSymbol(card);
-				addToOpen(card);
-			} else if(openCards.length == 2){
-				increaseCounter();
-				checkMatch();
-				// setInterval(checkMatch, 1000);
-			}
-		}
-
-	});
+	bindCardClickEvent();
+	bindResetClickEvent();
 });
 
 
