@@ -139,16 +139,16 @@ h1 {
 }
 
 .modal-content {
-    background-color: #fefefe;
-    margin: 10% auto; /* 15% from the top and centered */
+    background-color: #FFEFD5;
+    margin: 10% auto; /* 10% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 90%; /* Could be more or less, depending on screen size */
+    width: 60%; /* Could be more or less, depending on screen size */
 }
 
 .pic {
-    height: 50%;
-    width: 50%;
+    height: 40%;
+    width: 40%;
     display: block;
     margin: auto;
     padding-top: 20px;
@@ -168,18 +168,17 @@ h1 {
 
 /* Close the win/lose information window. */
 .close {
-    background-color: #D8BFD8;
-    -moz-border-radius: 28px;
-    -webkit-border-radius :28px;
-    border-radius: 28px;
-    border: 1px solid;
-    display: inline-block;
-    cursor: pointer;
-    color: #ffffff;
-    font-family: 'Chalkduster', fantasy;
-    font-size: 15px;
-    padding: 16px 31px;
+    color: #FFA07A;
+    float: right;
+    vertical-align: top;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
     text-decoration: none;
-    margin: auto; 
+    cursor: pointer;
 }
 

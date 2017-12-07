@@ -116,13 +116,14 @@ function increaseCounter(){
 	counter += 1;
 	$('.moves').text(counter);
 	// Decrease the star according to the number of moves that player made.
-	if(counter === 15){
+	if(counter === 5){
 		$('#third-star').css('color','#fefefe');
 		numStar = 2;
-	} else if(counter === 20){
+	} else if(counter === 10){
 		$('#second-star').css('color','#fefefe');
 		numStar = 1;
-	} else if(counter > 25){
+	} else if(counter === 15){
+		$('#first-star').css('color','#fefefe');
 		numStar = 0;
 		showLoseMessage();
 	}
@@ -233,7 +234,7 @@ $(document).ready(function(){
 	bindCardClickEvent();
 	bindResetClickEvent();
 	$('.close').click(function() {
-    $('.modal').css('display', 'none');
+    	$('.modal').css('display', 'none');
 	});
 });
 
