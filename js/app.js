@@ -177,7 +177,6 @@ function validate(card){
 
 // Keep cards open and remember the cards when there's a match.
 function handleMatch(){
-	//console.log('Cards are matching');
 	openCards.forEach(function(element){
 		matchedCards.push(element);
 		keepOpenOfMatch($('.card:has(.' + element + ')'));
@@ -188,7 +187,6 @@ function handleMatch(){
 
 // Hide the cards when there's not a match.
 function handleNoMatch(){
-	//console.log('Cards are NOT matching');
 	openCards.forEach(function(element){
 		hideSymbol($('.card:has(.' + element + ')'));
 	});
@@ -222,11 +220,8 @@ function cardClicked(card){
 
 	// if this is the first card that's opened, do nothing
 	if (openCards.length === 1) {
-		//console.log('Waiting for the 2nd card to be clicked');
 		return;
 	}
-
-	//console.log('2nd card clicked. Must do matching');
 	setTimeout(checkMatch, 500);
 }
 
