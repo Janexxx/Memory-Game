@@ -95,9 +95,9 @@ h1 {
 }
 
 .deck .card.notmatch {
-  background: #f95c3c;
+  background: #DB7093;
 }
-/*
+/*set
  * Styles for the Score Panel
  */
 
@@ -144,6 +144,9 @@ h1 {
     padding: 20px;
     border: 1px solid #888;
     width: 60%; /* Could be more or less, depending on screen size */
+    position: relative;
+    border: dotted  #E9967A 10px ;
+    border-radius: 30px;
 }
 
 .pic {
