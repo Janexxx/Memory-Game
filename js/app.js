@@ -96,7 +96,7 @@ function showSymbol(card){
 
 // Hide the selected card.
 function hideSymbol(card){
-	card.removeClass('open show');
+	card.removeClass('open show notmatch');
 }
 
 // Keep the matched cards.
@@ -187,8 +187,21 @@ function handleMatch(){
 
 // Hide the cards when there's not a match.
 function handleNoMatch(){
+	setTimeout(alertUser, 200);
+	setTimeout(closeCards, 1000);
+}
+
+function alertUser(){
+	console.log('alerting user');
 	openCards.forEach(function(element){
-		hideSymbol($('.card:has(.' + element + ')'));
+		let mycard = $('.show:has(.' + element + ')');
+		mycard.addClass('notmatch');
+	});
+}
+
+function closeCards(){
+	openCards.forEach(function(element){
+		hideSymbol($('.show:has(.' + element + ')'));
 	});
 	openCards.length = 0;
 }
