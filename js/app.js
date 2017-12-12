@@ -183,6 +183,7 @@ function validate(card){
 // Keep cards open and remember the cards when there's a match.
 function handleMatch(){
 	openCards.forEach(function(element){
+		$('.show:has(.' + element + ')').effect('shake');
 		matchedCards.push(element);
 		keepOpenOfMatch($('.card:has(.' + element + ')'));
 		isGameOver();
