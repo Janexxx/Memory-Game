@@ -193,13 +193,13 @@ function handleMatch(){
 // Hide the cards when there's not a match.
 function handleNoMatch(){
 	setTimeout(alertUser, 200);
-	setTimeout(closeCards, 500);
-	
+	setTimeout(closeCards, 700);
 }
 
 // Alert the user with a red card
 function alertUser(){
 	openCards.forEach(function(element){
+		$('.show:has(.' + element + ')').effect('shake');
 		redSymbol($('.show:has(.' + element + ')'));
 	});
 }
