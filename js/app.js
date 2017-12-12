@@ -99,6 +99,11 @@ function hideSymbol(card){
 	card.removeClass('open show notmatch');
 }
 
+// Make symbol red.
+function redSymbol(card){
+	card.addClass('notmatch');
+}
+
 // Keep the matched cards.
 function keepOpenOfMatch(card){
 	card.addClass('match');
@@ -191,14 +196,14 @@ function handleNoMatch(){
 	setTimeout(closeCards, 1000);
 }
 
+// Alert the user with a red card
 function alertUser(){
-	console.log('alerting user');
 	openCards.forEach(function(element){
-		let mycard = $('.show:has(.' + element + ')');
-		mycard.addClass('notmatch');
+		redSymbol($('.show:has(.' + element + ')'));
 	});
 }
 
+// Close the card
 function closeCards(){
 	openCards.forEach(function(element){
 		hideSymbol($('.show:has(.' + element + ')'));
