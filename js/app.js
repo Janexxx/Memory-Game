@@ -121,13 +121,13 @@ function increaseCounter(){
 	counter += 1;
 	$('.moves').text(counter);
 	// Decrease the star according to the number of moves that player made.
-	if(counter === 5){
+	if(counter === 20){
 		$('#third-star').css('color','#fefefe');
 		numStar = 2;
-	} else if(counter === 10){
+	} else if(counter === 25){
 		$('#second-star').css('color','#fefefe');
 		numStar = 1;
-	} else if(counter === 15){
+	} else if(counter === 30){
 		$('#first-star').css('color','#fefefe');
 		numStar = 0;
 		showLoseMessage();
@@ -193,7 +193,8 @@ function handleMatch(){
 // Hide the cards when there's not a match.
 function handleNoMatch(){
 	setTimeout(alertUser, 200);
-	setTimeout(closeCards, 1000);
+	setTimeout(closeCards, 500);
+	
 }
 
 // Alert the user with a red card
@@ -243,7 +244,7 @@ function cardClicked(card){
 	setTimeout(checkMatch, 500);
 }
 
-$(document).ready(function(){
+$(document).ready(function(event){
 	bindCardClickEvent();
 	bindResetClickEvent();
 	$('.close').click(function() {

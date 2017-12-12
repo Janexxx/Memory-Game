@@ -95,7 +95,11 @@ h1 {
 }
 
 .deck .card.notmatch {
-  background: #DB7093;
+    -webkit-transform: rotateY(0);
+            transform: rotateY(0);
+    cursor: default;
+    background: #FFC0CB;
+    font-size: 33px;
 }
 /*set
  * Styles for the Score Panel
@@ -144,7 +148,6 @@ h1 {
     padding: 20px;
     border: 1px solid #888;
     width: 60%; /* Could be more or less, depending on screen size */
-    position: relative;
     border: dotted  #E9967A 10px ;
     border-radius: 30px;
 }
